@@ -1,5 +1,6 @@
 module.exports = {
     mode: "jit",
+    prefix: "t-",
     content: [
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
