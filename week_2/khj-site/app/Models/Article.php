@@ -40,4 +40,21 @@ class Article extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    // Relationship
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    /**
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeIsOpen($query)
+    {
+        return $query->where('status', '=', 1);
+    }
 }
