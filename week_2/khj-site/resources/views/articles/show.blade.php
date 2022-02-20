@@ -33,11 +33,13 @@
                             <a class="t-no-underline hover:t-text-black" href="{{ route('articles.index') }}">목록으로</a>
                         </button>
                     </div>
-                    @auth
-                        <div class="t-flex">
-                            <button class="t-mx-auto t-mx-0 hover:t-no-underline t-font-bold t-rounded-full t-my-4 t-py-4 t-px-8 t-shadow-lg focus:t-outline-none focus:t-shadow-outline t-transform t-transition hover:t-scale-105 t-bg-[#F7D9D9]">
-                                <a class="t-no-underline hover:t-text-black" href="{{ route('articles.edit', $article) }}">수정</a>
-                            </button>
+                    <div class="t-flex">
+                        @can('update', $article)
+                        <button class="t-mx-auto t-mx-0 hover:t-no-underline t-font-bold t-rounded-full t-my-4 t-py-4 t-px-8 t-shadow-lg focus:t-outline-none focus:t-shadow-outline t-transform t-transition hover:t-scale-105 t-bg-[#F7D9D9]">
+                            <a class="t-no-underline hover:t-text-black" href="{{ route('articles.edit', $article) }}">수정</a>
+                        </button>
+                        @endcan
+                        @can('delete', $article)
                             <form method="POST" action="{{ route('articles.destroy', $article->id) }}" class="t-pl-2">
                                 @csrf
                                 @method('DELETE')
@@ -45,8 +47,8 @@
                                     <a class="t-no-underline hover:t-text-black" href="{{ route('articles.destroy', $article) }}">삭제</a>
                                 </button>
                             </form>
-                        </div>
-                    @endauth
+                        @endcan
+                    </div>
                 </div>
             </div>
         </div>
