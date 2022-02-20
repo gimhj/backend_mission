@@ -1,83 +1,69 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>KHJ</title>
+    <meta name="description" content="Externship Mission" />
     <link href="{{ asset('css/app_1.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app_2.css') }}" rel="stylesheet">
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="https://img.icons8.com/material-rounded/24/000000/flower-doodle.png" />
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+<body class="t-leading-normal t-tracking-normal t-bg-[#F9F3F3]">
+<div id="app">
+    <!-- Nav -->
+    <nav id="header" class="t-fixed t-w-full t-z-30 t-top-0 t-bg-white t-text-[#F25287]">
+        <div class="t-container t-mx-auto t-flex t-flex-wrap t-items-center t-justify-between t-mt-0 t-py-2">
+            <div class="t-pl-4 t-flex t-items-center t-text-3xl t-font-black">
+                KHJ
             </div>
-        </nav>
+            <div id="nav-content" class="t-w-full t-flex-grow t-flex t-items-center t-w-auto t-mt-2 t-mt-0 t-text-black t-p-4 t-p-0 t-z-20">
+                <ul class="t-list-reset t-flex t-justify-end t-flex-1 t-items-center t-pt-2">
+                    @guest
+                        @if (\Illuminate\Support\Facades\Route::has('login'))
+                            <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'login') ? 't-text-[#F25287]' : '' }}">
+                                <a class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]" href="{{ route('login') }}">로그인</a>
+                            </li>
+                        @endif
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+                        @if (\Illuminate\Support\Facades\Route::has('register'))
+                                <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'register') ? 't-text-[#F25287]' : '' }}">
+                                <a class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]" href="{{ route('register') }}">가입</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'logout') ? 't-text-[#F25287]' : '' }}">
+                            <a href="{{ route('logout') }}" class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]">
+                                {{ \Illuminate\Support\Facades\Auth::user()->name }}
+                            </a>
+                        </li>
+
+                        <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'logout') ? 't-text-[#F25287]' : '' }}">
+                            <a href="{{ route('logout') }}" class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                로그아웃
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+
+                    @endguest
+                </ul>
+            </div>
+        </div>
+        <hr class="t-border-b t-my-0 t-py-0" />
+    </nav>
+
+    <main class="t-pt-24">
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>

@@ -11294,3 +11294,7 @@ textarea.form-control-lg {
 html > body {
   font-family: "GmarketSansMedium";
 }
+
+a {
+  color: inherit;
+}
