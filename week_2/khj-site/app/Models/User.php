@@ -41,4 +41,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Relations
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'likeable');
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::deleted(function ($user) {
+            $user->articles()->deleted();
+            $user->likes()->delete();
+        });
+    }
 }

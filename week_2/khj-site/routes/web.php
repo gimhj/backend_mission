@@ -16,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 Route::resource('articles', \App\Http\Controllers\ArticleController::class);
 
+Route::middleware('auth')->group(function () {
+    // Like
+    Route::name('likes.')->group(function () {
+        Route::post('/', [\App\Http\Controllers\LikeController::class, 'store'])->name('like');
+        Route::delete('/{like}', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('unlike');
+    });
+});
+
 Auth::routes();

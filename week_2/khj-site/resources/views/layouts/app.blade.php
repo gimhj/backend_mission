@@ -13,6 +13,7 @@
     <link href="{{ asset('css/app_1.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app_2.css') }}" rel="stylesheet">
     <link rel="icon" href="https://img.icons8.com/material-rounded/24/000000/flower-doodle.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="t-leading-normal t-tracking-normal t-bg-[#F9F3F3]">
 <div id="app">
@@ -25,25 +26,22 @@
             <div id="nav-content" class="t-w-full t-flex-grow t-flex t-items-center t-w-auto t-mt-2 t-mt-0 t-text-black t-p-4 t-p-0 t-z-20">
                 <ul class="t-list-reset t-flex t-justify-end t-flex-1 t-items-center t-pt-2">
                     @guest
-                        @if (\Illuminate\Support\Facades\Route::has('login'))
-                            <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'login') ? 't-text-[#F25287]' : '' }}">
+                        @if (Route::has('login'))
+                            <li class="t-mr-3 {{ Str::startsWith(Route::currentRouteName(), 'login') ? 't-text-[#F25287]' : '' }}">
                                 <a class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]" href="{{ route('login') }}">로그인</a>
                             </li>
                         @endif
 
-                        @if (\Illuminate\Support\Facades\Route::has('register'))
-                                <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'register') ? 't-text-[#F25287]' : '' }}">
+                        @if (Route::has('register'))
+                                <li class="t-mr-3 {{ Str::startsWith(Route::currentRouteName(), 'register') ? 't-text-[#F25287]' : '' }}">
                                 <a class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]" href="{{ route('register') }}">가입</a>
                             </li>
                         @endif
                     @else
-                        <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'logout') ? 't-text-[#F25287]' : '' }}">
-                            <a href="{{ route('logout') }}" class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]">
-                                {{ \Illuminate\Support\Facades\Auth::user()->name }}
-                            </a>
+                        <li class="t-mr-3 {{ Str::startsWith(Route::currentRouteName(), 'myPage') ? 't-text-[#F25287]' : '' }}">
+                            {{ Auth::user()->name }}
                         </li>
-
-                        <li class="t-mr-3 {{ \Illuminate\Support\Str::startsWith(\Illuminate\Support\Facades\Route::currentRouteName(), 'logout') ? 't-text-[#F25287]' : '' }}">
+                        <li class="t-mr-3 {{ Str::startsWith(Route::currentRouteName(), 'logout') ? 't-text-[#F25287]' : '' }}">
                             <a href="{{ route('logout') }}" class="t-inline-block t-px-4 t-text-black t-font-bold t-no-underline hover:t-underline hover:t-text-[#F25287]"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 로그아웃

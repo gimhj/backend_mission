@@ -11,8 +11,28 @@
                     <p class="t-w-full t-text-gray-600 t-text-xs t-px-6 t-mb-1">
                         No. {{ $article->id }}
                     </p>
-                    <div class="t-w-full t-font-bold t-text-xl t-text-gray-800 t-px-6">
-                        {{ $article->title, 30 }}
+                    <div class="t-w-full t-flex t-justify-between t-px-6">
+                        <div class="t-font-bold t-text-xl t-text-gray-800 ">{{ $article->title, 30 }}</div>
+                        <div class="t-items-center">
+                            @if($article->isLikedBy(Auth::user()))
+                                <form method="POST" action="{{ route('likes.unlike', $article->getLikedItem(Auth::user())) }}" class="t-pl-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="t-pr-2 t-cursor-pointer focus:t-outline-none focus:t-shadow-outline t-transform t-transition hover:t-scale-150 t-duration-300 t-ease-in-out">
+                                        <i class="fas fa-heart fa-lg t-text-[#F25287]"></i>
+                                    </button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('likes.like', $article->id) }}" class="t-pl-2">
+                                    @csrf
+                                    <input type="hidden" name="likeable_type" value="{{ get_class($article) }}">
+                                    <input type="hidden" name="likeable_id" value="{{ $article->id }}">
+                                    <button type="submit" class="t-pr-2 t-cursor-pointer focus:t-outline-none focus:t-shadow-outline t-transform t-transition hover:t-scale-150 t-duration-300 t-ease-in-out">
+                                        <i class="far fa-heart fa-lg"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                     <div class="t-w-full d-flex t-px-6 t-mt-1 t-justify-between">
                         <p class="t-text-gray-600 t-text-md">{{ $article->user->name }}</p>

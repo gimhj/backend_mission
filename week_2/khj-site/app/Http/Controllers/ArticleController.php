@@ -19,7 +19,7 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $articles = Article::with('user')
+        $articles = Article::with('user', 'likes')
             ->isOpen()
             ->orderBy('id', 'desc')
             ->get();
@@ -48,11 +48,11 @@ class ArticleController extends Controller
     public function store(Request $request, Article $article)
     {
         $title = $request->get('title');
-        $userID = $request->user()->id;
+        $userId = $request->user()->id;
         $status = $request->get('status');
         $body = $request->get('body');
 
-        $article->user_id = $userID;
+        $article->user_id = $userId;
         $article->title = $title;
         $article->status = $status;
         $article->body = $body;
@@ -93,11 +93,11 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $title = $request->get('title');
-        $userID = $request->user()->id;
+        $userId = $request->user()->id;
         $status = $request->get('status');
         $body = $request->get('body');
 
-        $article->user_id = $userID;
+        $article->user_id = $userId;
         $article->title = $title;
         $article->status = $status;
         $article->body = $body;

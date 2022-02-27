@@ -33,6 +33,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Article withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Article withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \App\Models\User|null $likes
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Article isOpen()
  */
 class Article extends Model
 {
@@ -41,12 +44,19 @@ class Article extends Model
 
     protected $dates = ['deleted_at'];
 
-    // Relationship
+    // Relations
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
+
+    // Method
     /**
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -56,5 +66,48 @@ class Article extends Model
     public function scopeIsOpen($query)
     {
         return $query->where('status', '=', 1);
+    }
+
+
+    /**
+     * Determine if the article has been liked by a specific user.
+     *
+     * @param User|null $user
+     * @return bool
+     */
+    public function isLikedBy(?User $user)
+    {
+        if (is_null($user)) {
+            return false;
+        }
+
+        return $this->likes()->where('user_id', $user->id)->exists();
+    }
+
+    /**
+     * Return the article if it has been liked by a specific user.
+     *
+     * @param User|null $user
+     * @return bool
+     */
+    public function getLikedItem(?User $user)
+    {
+        if (is_null($user)) {
+            return false;
+        }
+
+        return $this->likes()->where('user_id', $user->id)->first();
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::deleted(function ($article) {
+            $article->likes()->delete();
+        });
     }
 }

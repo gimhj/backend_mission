@@ -33,7 +33,30 @@
                         </p>
                     </a>
                 </div>
+                <div class="t-flex-none t-mt-auto t-bg-white t-rounded-b t-rounded-t-none t-shadow t-p-3 t-text-black">
+                    <div class="t-items-center t-text-right">
+                        @if($article->isLikedBy(Auth::user()))
+                            <form method="POST" action="{{ route('likes.unlike', $article->getLikedItem(Auth::user())) }}" class="t-pl-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="t-pr-2 t-cursor-pointer focus:t-outline-none focus:t-shadow-outline t-transform t-transition hover:t-scale-150 t-duration-300 t-ease-in-out">
+                                    <i class="fas fa-heart fa-lg t-text-[#F25287]"></i> {{ $article->likes->count() }}
+                                </button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('likes.like', $article->id) }}" class="t-pl-2">
+                                @csrf
+                                <input type="hidden" name="likeable_type" value="{{ get_class($article) }}">
+                                <input type="hidden" name="likeable_id" value="{{ $article->id }}">
+                                <button type="submit" class="t-pr-2 t-cursor-pointer focus:t-outline-none focus:t-shadow-outline t-transform t-transition hover:t-scale-150 t-duration-300 t-ease-in-out">
+                                    <i class="far fa-heart fa-lg"></i> {{ $article->likes->count() }}
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
             </div>
+
         @endforeach
     </div>
 </section>
